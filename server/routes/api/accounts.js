@@ -82,7 +82,9 @@ router.post('/', async (req, res) => {
     phone: req.body.phone,
     type: req.body.type
   });
-  res.status(201).send();
+  res.status(201).send({
+    message:"Usuário criado!"
+  });
 })
 
 //delete
