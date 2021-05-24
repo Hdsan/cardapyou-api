@@ -47,41 +47,31 @@ router.delete("/:id", async (req, res) => {
     res.status(200).send();
   });
 
-  //informações da receita por id
-router.get("/:id", async (req, res) => {
-    const id =  req.params.id;
-    try{
-      const posts = await loadRecipes();
-      const recipes = await posts.find({
-        _id: new mongodb.ObjectID(req.params.id),
-      }).toArray();
-      if(account.length == 0){
-        throw 'Receita não encontrada'
-      }
-        res.status(200).send(account[0]);
-     
-    }
-    catch(err){
-      res.status(400).send(err)
-    }
-  });
   //receitas por restaurante 
-  router.get("/:city", async (req, res) => {
+  router.get("/:id", async (req, res) => {
     const id =  req.params.id;
     try{
       const posts = await loadRecipes();
       const recipes = await posts.find({
-        _id: new mongodb.ObjectID(req.params.id),
+      "Restaurant_id": id,
       }).toArray();
-      if(account.length == 0){
-        throw 'Receita não encontrada'
+      
+      if(recipes.length == 0){
+        res.status(400).send("Nenhuma receita");
       }
-        res.status(200).send(account[0]);
-     
+      res.status(200).send(recipes);
     }
     catch(err){
       res.status(400).send(err)
     }
   });
+  //delete
+router.delete("/:id", async (req, res) => {
+  const recipes = await loadRecipes();
+  await recipes.deleteOne({
+    _id: new mongodb.ObjectID(req.params.id),
+  })
+  res.status(200).send();
+});
 
 module.exports = router;

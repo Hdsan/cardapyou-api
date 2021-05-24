@@ -40,12 +40,12 @@ router.get("/:mail/:pass", async (req, res) => {
       res.status(200).send({ok : true,data : account[0]});
     }
     else{
-     throw "Combinação de email/senha incorreta"
+      res.status(401).send({ok: false ,message: "Combinação de email/senha incorreta",erro:err})
     }
    
   }
   catch(err){
-    res.status(401).send({ok: false ,message: "Combinação de email/senha incorreta",erro:err})
+    res.status(401).send({osk: false ,message: "Houve algum erro",erro:err})
   }
 });
 
@@ -80,6 +80,8 @@ router.post('/', async (req, res) => {
     password: req.body.password,
     complement: req.body.complement,
     phone: req.body.phone,
+    rating: req.body.rating,
+    img: 'https://i.imgur.com/s53kZUo.png',
     type: req.body.type
   });
   res.status(201).send({
@@ -98,6 +100,3 @@ router.delete("/:id", async (req, res) => {
 
 
 module.exports = router;
-/*
-
-*/
