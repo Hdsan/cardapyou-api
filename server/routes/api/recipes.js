@@ -26,12 +26,12 @@ async function loadRecipes() {
   });
 
   //criar receitas
-  router.post('/:id', async (req, res) => {
+  router.post('/', async (req, res) => {
     const id = req.params.id  
     const recipes = await loadRecipes();
     await recipes.insertOne({
       name: req.body.name,
-      Restaurant_id: id,
+      Restaurant_id: req.body.Restaurant_id,
       price: req.body.price,
       img: req.body.img
     });
